@@ -42,13 +42,13 @@ class CartCore {
   function pdtGetAll () {
     $this->query("SELECT * FROM `products`");
     $pdts = [];
-    while ($row = $this->stmt->fetch()) { $pdts[$row['book_id']] = $row; }
+    while ($row = $this->stmt->fetch()) { $pdts[$row['product_id']] = $row; }
     return count($pdts)==0 ? null : $pdts ;
   }
 
   // (B2) GET PRODUCT
   function pdtGet ($id) {
-    $this->query("SELECT * FROM `products` WHERE `book_id`=?", [$id]);
+    $this->query("SELECT * FROM `products` WHERE `product_id`=?", [$id]);
     return $this->stmt->fetch();
   }
 
@@ -94,12 +94,12 @@ class CartCore {
     if (count($_SESSION['cart'])==0) { return false; }
 
     // GET PRODUCTS IN CART
-    $sql = "SELECT * FROM `products` WHERE `book_id` IN (";
+    $sql = "SELECT * FROM `products` WHERE `product_id` IN (";
     $sql .= str_repeat('?,', count($_SESSION['cart']) - 1) . '?';
     $sql .= ")";
     $this->query($sql, array_keys($_SESSION['cart']));
     $pdts = [];
-    while ($row = $this->stmt->fetch()) { $pdts[$row['book_id']] = $row; }
+    while ($row = $this->stmt->fetch()) { $pdts[$row['product_id']] = $row; }
     return count($pdts)==0 ? null : $pdts ;
   }
 
@@ -117,7 +117,7 @@ class CartCore {
     // INSERT THE ITEMS
     if ($pass) {
       $this->orderID = $this->pdo->lastInsertId();
-      $sql = "INSERT INTO `orders_items` (`order_id`, `book_id`, `quantity`) VALUES ";
+      $sql = "INSERT INTO `orders_items` (`order_id`, `product_id`, `quantity`) VALUES ";
       $cond = [];
       foreach ($_SESSION['cart'] as $id=>$qty) {
         $sql .= "(?, ?, ?),";
@@ -152,9 +152,9 @@ class CartCore {
     }
 
     // GET ITEMS
-    $this->query("SELECT * FROM `orders_items` LEFT JOIN `products` USING (`book_id`) WHERE `orders_items`.order_id=?", [$id]);
+    $this->query("SELECT * FROM `orders_items` LEFT JOIN `products` USING (`product_id`) WHERE `orders_items`.order_id=?", [$id]);
     $order['items'] = [];
-    while ($row = $this->stmt->fetch()) { $order['items'][$row['book_id']] = $row; }
+    while ($row = $this->stmt->fetch()) { $order['items'][$row['product_id']] = $row; }
 
     // FORMAT EMAIL - CHANGE AS YOU SEE FIT
     $mailTo = $order['order_email'];
