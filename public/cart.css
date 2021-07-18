@@ -1,0 +1,89 @@
+/* (A) ENTIRE PAGE */
+html, body {
+  font-family: arial, sans-serif;
+  max-width: 1200px;
+  padding: 0;
+  margin: 0 auto;
+}
+.bRed {
+  background: #c13e3e;
+  font-size: 1.1em;
+  color: #fff;
+  border: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+.ninja { display: none !important; }
+
+/* (B) HEADER */
+#scHead {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: auto 100px;
+  color: #fff;
+  background: #353535;
+  font-size: 1.4em;
+}
+#scTitle, #scCartIcon { padding: 20px; }
+#scCartIcon {
+  background: #565656;
+  text-align: center;
+  cursor: pointer;
+}
+#scCartIcon.active { background: #c13e3e; }
+
+/* (C) PRODUCTS LIST */
+#scProduct {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  padding: 10px;
+}
+@media all and (max-width: 768px) {
+  #scProduct { grid-template-columns: auto auto; }
+}
+.pdt {
+  background: #f0f0f0;
+  padding: 10px;
+}
+.pImg {
+  max-width: 100%;
+  object-fit: contain;
+}
+.pName {
+  margin: 5px 0;
+  color: #0e0e0e;
+}
+.pPrice { color: #a82828; }
+.pDesc { color: #777; }
+.pAdd {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* (D) SHOPPING CART */
+#scCart { padding: 10px; }
+#scTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+#scTable th { text-align: left; }
+#scTable th, #scTable td { padding: 10px; }
+#scTable tr:nth-child(odd) { background: #f2f2f2; }
+#scTable input[type=number] {
+  width: 60px;
+  padding: 5px;
+}
+
+/* (E) CHECKOUT FORM */
+#scCheckout {
+  margin-top: 10px;
+  max-width: 320px;
+}
+#scCheckout input {
+  box-sizing: border-box;
+  padding: 5px;
+  margin: 5px;
+  width: 100%;
+}
